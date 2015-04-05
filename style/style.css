@@ -1,0 +1,92 @@
+/*css for _CropImage*/
+.jimu-crop-image{
+  width: 600px;
+  height: 400px;
+  overflow: hidden;
+  margin: auto;
+  border: 1px solid red;
+  padding: 60px 20px;
+}
+
+.jimu-crop-image .viewer-box{
+  position: relative;
+  margin: auto;
+}
+
+.jimu-crop-image .viewer-content{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.jimu-crop-image .viewer-box .viewer-content .viewer-image{
+  position: absolute;
+}
+
+.jimu-crop-image .viewer-box .base-image{
+  position: absolute;
+  opacity: 0.3;
+  cursor: move;
+}
+
+.jimu-crop-image .hide-image{
+  visibility: hidden;
+}
+
+.jimu-crop-image .controller{
+  position: absolute;
+  width: 280px;
+  height: 30px;
+  margin: auto;
+  padding: 8px 32px;
+  left: 0;
+  right: 0;
+  bottom:-40px;
+  color: #aaa;
+  cursor: default;
+  background: rgba(0, 0, 0, .5);
+}
+
+.jimu-crop-image .controller .zoom-out{
+  position: absolute;
+  left: 13px;
+  top: 0;
+  bottom: 0;
+  height: 4px;
+  margin: auto;
+  line-height: 4px;
+  cursor: pointer;
+}
+
+.jimu-crop-image .controller .slider{
+  width: 100%;
+  position: relative;
+}
+
+.jimu-crop-image .controller .slider .button{
+  background: #aaa;
+  border-radius: 6px;
+  height: 13px;
+  margin-left: -6px;
+  width: 13px;
+  position: absolute;
+  left: 0;
+  cursor: move;
+}
+
+.jimu-crop-image .controller .slider .horizontal{
+  border-bottom: 1px solid #aaa;
+  height: 7px;
+}
+
+.jimu-crop-image .controller .zoom-in{
+  position: absolute;
+  right: 13px;
+  top: 0;
+  bottom: 0;
+  height: 4px;
+  margin: auto;
+  line-height: 4px;
+  cursor: pointer;
+}
