@@ -40,8 +40,8 @@
   position: absolute;
   opacity: 0.3;
   cursor: move;
-  filter: Alpha(opacity=40);
   -ms-filter: "Alpha(opacity=40)";
+  filter: Alpha(opacity=40);
 }
 
 .jimu-crop-image .hide-status{
@@ -59,7 +59,10 @@
   bottom:20px;
   color: #aaa;
   cursor: default;
+  background: rgb(0,0,0);
   background: rgba(0, 0, 0, .5);
+  -ms-filter: "Alpha(opacity=50)";
+  filter: Alpha(opacity=50);
 }
 
 .jimu-crop-image .controller .zoom-out{

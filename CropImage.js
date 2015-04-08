@@ -31,14 +31,10 @@ define([
 			templateString: template,
 			inDrag: false,
 			inSlider: false,
-			realWidth: 500,
-			realHeight: 320,
+			realWidth: 30,
+			realHeight: 30,
 			ratio: null,
-			// imageSrc: "https://s3-us-west-2.amazonaws.com/slack-files2/avatar-temp/2015-04-03/4299453127_bd874de53bcc11fdbe93.png",
-			// imageSrc: "https://s3-us-west-2.amazonaws.com/slack-files2/avatar-temp/2015-04-03/4275807216_4bdaee13cd29dd11599e.png",
-			// imageSrc: "https://s3-us-west-2.amazonaws.com/slack-files2/avatar-temp/2015-04-03/4309490861_def37718b40de700dca7.png",
-			imageSrc: "https://scontent-sjc.xx.fbcdn.net/hphotos-xpf1/t31.0-8/11082173_1375191982809420_8824827256454539423_o.jpg",
-			// imageSrc: "http://news.cnr.cn/native/gd/20150403/W020150403694899717486.jpg",
+			imageSrc: null,
 
 			_currentX: null,
 			_currentY: null,
@@ -114,20 +110,27 @@ define([
 				this.idealHeight = this.realHeight;
 
 				this.ratio = this.ratio ? this.ratio : this.realWidth / this.realHeight;
-				if (this.ratio > 1) {
-					if (this.realWidth <= cropSectionContentBox.w) {
-						this.idealWidth += (cropSectionContentBox.w - this.realWidth) / 2;
-					} else {
-						this.idealWidth = cropSectionContentBox.w;
-					}
-					this.idealHeight = this.idealWidth / this.ratio;
-				} else {
-					if (this.realHeight <= cropSectionContentBox.h) {
-						this.idealHeight += (cropSectionContentBox.h - this.idealHeight) / 2;
-					} else {
+				var _ratio = this.ratio;
+				if (this.ratio >= 1) {
+					if (cropSectionContentBox.h * this.ratio <= cropSectionContentBox.w) {
 						this.idealHeight = cropSectionContentBox.h;
+						this.idealWidth = cropSectionContentBox.h * this.ratio;
+					} else {
+						this.idealHeight = this._findProperlyValue(0, cropSectionContentBox.h, cropSectionContentBox.w - 5, function(p) {
+							return p * _ratio;
+						});
+						this.idealWidth = this.idealHeight * this.ratio;
 					}
-					this.idealWidth = this.idealHeight * this.ratio;
+				} else {
+					if (cropSectionContentBox.w / this.ratio <= cropSectionContentBox.h) {
+						this.idealWidth = cropSectionContentBox.w;
+						this.idealHeight = cropSectionContentBox.w / this.ratio;
+					} else {
+						this.idealWidth = this._findProperlyValue(0, cropSectionContentBox.w, cropSectionContentBox.h - 5, function(p) {
+							return p / _ratio;
+						});
+						this.idealHeight = this.idealWidth / this.ratio;
+					}
 				}
 
 				html.setStyle(this.viewerBox, {
