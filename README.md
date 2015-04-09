@@ -1,7 +1,10 @@
 # CropImage
-����facebookͼƬ�ü������������Զ��壬ͼƬ��С���⣬��֤ͼƬ���߱ȣ�֧�����š��϶�
+类似facebook图片裁剪，裁切区域自定义，图片大小任意，保证图片宽高比，支持缩放、拖动
 
-#ʹ�÷���
+# Demo
+http://sandbox.runjs.cn/show/uqfwtnpj
+
+#使用方法
     var crop = new CropImage({
     realWidth: 500,
     realHeight: 300,
