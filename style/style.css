@@ -1,12 +1,17 @@
 /*css for _CropImage*/
 .jimu-crop-image{
-  width: 600px;
-  height: 400px;
-  overflow: hidden;
-  margin: auto;
-  border: 1px solid red;
-  padding: 20px 20px;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #d2dae2;
+}
+
+.jimu-crop-image .crop-section{
   position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding: 20px;
+  background: #fafafc;
 }
 
 .jimu-crop-image .loading-image{
@@ -50,30 +55,39 @@
 
 .jimu-crop-image .controller{
   position: absolute;
-  width: 280px;
+  width: 238px;
   height: 30px;
-  margin: auto;
-  padding: 8px 32px;
+  padding: 8px 24px;
   left: 0;
   right: 0;
-  bottom:20px;
-  color: #aaa;
+  bottom: -35px;
+  color: #fff;
   cursor: default;
-  background: rgb(0,0,0);
-  background: rgba(0, 0, 0, .5);
-  -ms-filter: "Alpha(opacity=50)";
-  filter: Alpha(opacity=50);
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.jimu-crop-image .controller .zoom-out,
+.jimu-crop-image .controller .zoom-in {
+  width: 14px;
+  height: 14px;
+  margin: auto;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 14px;
+  cursor: pointer;
+  border-radius: 10px;
+  background: #518dca;
+  cursor: pointer;
 }
 
 .jimu-crop-image .controller .zoom-out{
   position: absolute;
-  left: 13px;
+  left: 0px;
   top: 0;
   bottom: 0;
-  height: 4px;
-  margin: auto;
-  line-height: 4px;
-  cursor: pointer;
 }
 
 .jimu-crop-image .controller .slider{
@@ -82,28 +96,39 @@
 }
 
 .jimu-crop-image .controller .slider .button{
-  background: #aaa;
-  border-radius: 6px;
-  height: 13px;
+  background: #fff;
+  border: 1px solid #d2dae2;
+  border-radius: 7px;
+  height: 14px;
   margin-left: -6px;
-  width: 13px;
+  width: 14px;
   position: absolute;
   left: 0;
   cursor: move;
 }
 
 .jimu-crop-image .controller .slider .horizontal{
-  border-bottom: 1px solid #aaa;
+  border-bottom: 2px solid #518dca;
   height: 7px;
 }
 
 .jimu-crop-image .controller .zoom-in{
   position: absolute;
-  right: 13px;
+  right: 0px;
   top: 0;
   bottom: 0;
-  height: 4px;
-  margin: auto;
-  line-height: 4px;
-  cursor: pointer;
+}
+
+.jimu-rtl .jimu-crop-image .controller .zoom-out{
+  left: auto;
+  right: 0;
+}
+
+.jimu-rtl .jimu-crop-image .controller .slider .button{
+  left: 100%;
+}
+
+.jimu-rtl .jimu-crop-image .controller .zoom-in{
+  left: 0;
+  right: auto;
 }

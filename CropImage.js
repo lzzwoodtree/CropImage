@@ -193,11 +193,9 @@ define([
 				//sometimes zoomratio < 1; it's should be not allowed to zoom
 				this._zoomRatio = this._maxImageWidth / this._minImageWidth;
 
-				if (this._zoomRatio < 1) {
-					html.setStyle(this.zoomController, 'display', 'none');
-				}
-
-				if (!this._latestPercentage) {
+				if (window.isRTL) {
+					this._latestPercentage = 100;
+				} else {
 					this._latestPercentage = 0;
 				}
 			},
@@ -272,6 +270,10 @@ define([
 			},
 
 			_onSliderMouseDown: function(evt) {
+				if (this._zoomRatio <= 1) {
+					return;
+				}
+
 				this.inSlider = true;
 				this._currentX = evt.clientX;
 				this._currentY = evt.clientY;
@@ -285,6 +287,10 @@ define([
 			},
 
 			_onSliderMouseUp: function(evt) {
+				if (this._zoomRatio <= 1) {
+					return;
+				}
+
 				if (!this.inSlider) {
 					return;
 				}
@@ -309,6 +315,9 @@ define([
 				}
 
 				if (this.inSlider) {
+					if (this._zoomRatio <= 1) {
+						return;
+					}
 					this._resetSliderButtonPosition(evt.clientX, evt.clientY);
 				}
 			},
@@ -324,18 +333,31 @@ define([
 			},
 
 			_onZoomOutClick: function() {
-				this._latestPercentage = this._normalizePercentage(this._latestPercentage);
-				var percentage = this._normalizePercentage(this._latestPercentage - 20);
-				this._moveSliderButton(percentage, this._latestPercentage);
-				this._latestPercentage = percentage;
-				var imageStyle = this._getComputedStyle(this.baseImage);
-				this._currentLeft = parseFloat(imageStyle.left);
-				this._currentTop = parseFloat(imageStyle.top);
+				if (this._zoomRatio <= 1) {
+					return;
+				}
+
+				this._zoomImage('out');
 			},
 
 			_onZoomInClick: function() {
+				if (this._zoomRatio <= 1) {
+					return;
+				}
+
+				this._zoomImage('in');
+			},
+
+			_zoomImage: function(type) {
+				var p = 0;
 				this._latestPercentage = this._normalizePercentage(this._latestPercentage);
-				var percentage = this._normalizePercentage(this._latestPercentage + 20);
+				if (type === 'in') {
+					p = window.isRTL ? this._latestPercentage - 20 : this._latestPercentage + 20;
+				} else if (type === 'out') {
+					p = window.isRTL ? this._latestPercentage + 20 : this._latestPercentage - 20;
+				}
+
+				var percentage = this._normalizePercentage(p);
 				this._moveSliderButton(percentage, this._latestPercentage);
 				this._latestPercentage = percentage;
 				var imageStyle = this._getComputedStyle(this.baseImage);
@@ -393,11 +415,19 @@ define([
 				var delX = clientX - this._startSliderLeft;
 				var leftPercentage = delX / this._sliderWidth * 100;
 				leftPercentage = this._normalizePercentage(leftPercentage);
+				var _latestPercentage = this._latestPercentage;
 
-				this._moveSliderButton(leftPercentage, this._latestPercentage);
+				this._moveSliderButton(leftPercentage, _latestPercentage);
 			},
 
 			_moveSliderButton: function(leftPercentage, _latestPercentage) {
+				html.setStyle(this.sliderButton, 'left', leftPercentage + '%');
+
+				if (window.isRTL) {
+					leftPercentage = 100 - leftPercentage;
+					_latestPercentage = 100 - _latestPercentage;
+				}
+
 				var delImageWidth = this._minImageWidth * (this._zoomRatio - 1) * leftPercentage / 100;
 				var delImageHeight = this._minImageHeight * (this._zoomRatio - 1) * leftPercentage / 100;
 
@@ -409,7 +439,6 @@ define([
 				var delImageTop = (Math.abs(this._currentTop) + this.idealHeight / 2) *
 					((this._minImageWidth + delImageWidth) / this._currentImageWidth - 1);
 
-				html.setStyle(this.sliderButton, 'left', leftPercentage + '%');
 				html.setStyle(this.baseImage, {
 					width: this._minImageWidth + delImageWidth + 'px',
 					height: this._minImageHeight + delImageHeight + 'px'
