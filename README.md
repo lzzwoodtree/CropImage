@@ -12,7 +12,7 @@ http://sandbox.runjs.cn/show/uqfwtnpj
     });
     
     document.appendChild(div, crop.domNode);
-    cropImage.startup();
+    crop.startup();
     
     //{
     //w:
